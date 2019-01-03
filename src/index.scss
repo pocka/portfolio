@@ -1,0 +1,10 @@
+// Common styles.
+// Will be inlined in HTML file.
+
+body {
+  margin: 0;
+}
+
+:not(:defined) {
+  display: none;
+}
