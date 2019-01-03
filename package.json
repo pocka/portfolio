@@ -40,7 +40,8 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --mode development",
-    "build": "NODE_ENV=production webpack --mode production"
+    "build": "NODE_ENV=production webpack --mode production",
+    "deploy": "s3-deploy './dist/**' --cwd './dist' --bucket $AWS_BUCKET_NAME --distId $AWS_CF_DIST_ID --invalidate '/*' --gzip --etag"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -58,6 +59,7 @@
     "prerender-loader": "^1.2.0",
     "prettier": "^1.15.3",
     "raw-loader": "^1.0.0",
+    "s3-deploy": "^1.2.0",
     "sass": "^1.15.2",
     "sass-loader": "^7.1.0",
     "script-ext-html-webpack-plugin": "^2.1.3",
