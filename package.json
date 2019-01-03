@@ -4,7 +4,6 @@
   "description": "My portfolio",
   "repository": "git@github.com:pocka/portfolio.git",
   "author": "pocka <pockawoooh@gmail.com>",
-  "license": "MIT",
   "private": true,
   "browserslist": [
     "last 2 Chrome versions",
