@@ -41,7 +41,8 @@
   "scripts": {
     "dev": "webpack-dev-server --mode development",
     "build": "NODE_ENV=production webpack --mode production",
-    "deploy": "s3-deploy './dist/**' --cwd './dist' --bucket $AWS_BUCKET_NAME --distId $AWS_CF_DIST_ID --invalidate '/*' --gzip --etag"
+    "deploy": "s3-deploy './dist/**' --cwd './dist' --bucket $AWS_BUCKET_NAME --distId $AWS_CF_DIST_ID --invalidate '/*' --gzip --etag",
+    "test": "exit 0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
