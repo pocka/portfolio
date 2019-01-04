@@ -16,23 +16,30 @@ class MyLink extends HTMLElement {
 
     style.innerText = css
 
-    // Work-around for it's not possible to specify text-decoration to :host.
-    // I don't know this is bug or intended behavior :(
-    const span = document.createElement('span')
+    const anchor = document.createElement('a')
 
-    span.classList.add('link')
-    span.innerHTML = '<slot/>'
+    anchor.classList.add('link')
+    anchor.innerHTML = '<slot/>'
+    anchor.href = this.getAttribute('href')
 
     shadow.appendChild(style)
-    shadow.appendChild(span)
+    shadow.appendChild(anchor)
 
-    shadow.addEventListener('click', () => this.navigate())
+    shadow.addEventListener('click', ev => {
+      ev.preventDefault()
+      ev.stopPropagation()
+
+      this.navigate()
+    })
   }
 
+  /**
+   * Navigate to href virtually by using History API.
+   */
   navigate() {
     const href = this.getAttribute('href')
 
-    if (href === location.pathname.replace(/(.+)\/$/, '$1')) {
+    if (href === location.pathname) {
       return
     }
 

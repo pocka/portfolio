@@ -1,10 +1,29 @@
 // Common styles.
 // Will be inlined in HTML file.
 
+@import "./vars";
+
 body {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
   margin: 0;
+  padding: {
+    bottom: 80px;
+  }
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background-color: $color-bg;
+  color: $color-fg;
 }
 
-:not(:defined) {
-  display: none;
+#app {
+  flex-grow: 1;
+}
+
+my-statusbar {
+  flex-shrink: 0;
 }

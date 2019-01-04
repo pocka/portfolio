@@ -11,9 +11,6 @@ const app = document.getElementById('app')
 const render = (ssr = false) => {
   const path = location.pathname.replace(/(.+)\/$/, '$1')
 
-  // Common components
-  import('./components/my-link')
-
   // Render each route
   switch (path) {
     case '/':

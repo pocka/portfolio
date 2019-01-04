@@ -8,16 +8,17 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const pkg = require('./package.json')
 
-const paths = ['/', '/foo']
+const paths = ['/', '/about/', '/skill/', '/works/', '/contact/']
 
 module.exports = {
   entry: {
-    index: './src/index.js'
+    index: './src/index.js',
+    components: './src/components.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: '[name].js'
+    filename: '[name].[hash:8].js'
   },
   module: {
     rules: [
@@ -54,6 +55,10 @@ module.exports = {
             options: { implementation: require('sass') }
           }
         ]
+      },
+      {
+        test: /\.svg$/,
+        loader: 'raw-loader'
       }
     ]
   },
@@ -73,7 +78,6 @@ module.exports = {
                 })}!./src/index.html`
               : './src/index.html',
           filename: path.resolve(__dirname, `./dist${p}/index.html`),
-          hash: true,
           minify: {
             collapseWhitespace: true,
             removeComments: true,
@@ -88,7 +92,7 @@ module.exports = {
     new StyleExtHtmlPlugin(),
     new ScriptExtHtmlPlugin({
       defaultAttribute: 'async',
-      defer: 'index.js'
+      defer: /index\..*\.js/
     })
   ]
 }
