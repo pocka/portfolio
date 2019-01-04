@@ -40,7 +40,7 @@
   "scripts": {
     "dev": "webpack-dev-server --mode development",
     "build": "rm -rf dist && NODE_ENV=production webpack --mode production",
-    "deploy": "s3-deploy './dist/**' --cwd './dist' --bucket $AWS_BUCKET_NAME --distId $AWS_CF_DIST_ID --invalidate '/*' --gzip --etag --deleteRemoved",
+    "deploy": "s3-deploy './dist/**' --cwd './dist/' --bucket $AWS_BUCKET_NAME --distId $AWS_CF_DIST_ID --invalidate '/*' --gzip --etag --deleteRemoved",
     "test": "exit 0"
   },
   "devDependencies": {
