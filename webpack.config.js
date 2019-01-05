@@ -95,7 +95,7 @@ module.exports = {
   devServer: {
     contentBase: './dist'
   },
-  devtool: 'cheap-source-map',
+  devtool: process.env.NODE_ENV === 'production' ? false : 'cheap-source-map',
   plugins: [
     new MiniCssExtractPlugin(),
     ...paths.map(
