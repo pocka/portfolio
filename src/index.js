@@ -12,19 +12,25 @@ const render = (ssr = false) => {
   const path = location.pathname.replace(/(.+)\/$/, '$1')
 
   // Render each route
-  switch (path) {
-    case '/':
-      if (!ssr) {
-        app.innerHTML =
-          '<my-button>Button</my-button><my-link href="/foo">foo</my-link>'
-      }
-      return
-    case '/foo':
-      if (!ssr) {
-        app.innerHTML = '<my-link href="/">TOP</my-link>'
-      }
+  const html = (() => {
+    switch (path) {
+      case '/':
+        return '<div>TOP</div>'
+      case '/about':
+        return 'ABOUT'
+      case '/skill':
+        return 'SKILL'
+      case '/works':
+        return 'WORKS'
+      case '/contact':
+        return 'CONTACT'
+      default:
+        return 'NOT FOUND'
+    }
+  })()
 
-      return
+  if (!ssr) {
+    app.innerHTML = html
   }
 }
 
