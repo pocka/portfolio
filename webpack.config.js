@@ -55,7 +55,40 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        loader: 'raw-loader'
+        use: [
+          'raw-loader',
+          {
+            loader: 'svgo-loader',
+            options: {
+              plugins: [
+                { cleanupAttrs: true },
+                { inlineStyles: true },
+                { removeXMLProcInst: true },
+                { removeComments: true },
+                { removeMetadata: true },
+                { removeTitle: true },
+                { removeDesc: true },
+                { removeUselessDefs: true },
+                { removeXMLNS: true },
+                { removeEditorNSData: true },
+                { removeEmptyAttrs: true },
+                { removeEmptyContainers: true },
+                { minifyStyles: true },
+                { convertPathData: true },
+                { convertTransform: true },
+                { removeUnknownsAndDefaults: true },
+                { cleanupIDs: true },
+                { moveElemsAttrsToGroup: true },
+                { collapseGroups: true },
+                {
+                  removeAttrs: {
+                    attrs: ['data-.*', 'class']
+                  }
+                }
+              ]
+            }
+          }
+        ]
       }
     ]
   },
