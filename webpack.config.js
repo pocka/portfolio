@@ -24,10 +24,7 @@ module.exports = {
     rules: [
       {
         test: /\.m?js$/,
-        include: [
-          path.resolve(__dirname, './src'),
-          /\/node_modules\/(@polymer|lit-html)\//
-        ],
+        exclude: /\/node_modules\//,
         use: {
           loader: 'babel-loader',
           options: pkg.babel
@@ -65,6 +62,7 @@ module.exports = {
   devServer: {
     contentBase: './dist'
   },
+  devtool: 'cheap-source-map',
   plugins: [
     new MiniCssExtractPlugin(),
     ...paths.map(
