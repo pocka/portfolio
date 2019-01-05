@@ -24,13 +24,22 @@ class MyStatusbar extends HTMLElement {
 
     style.textContent = css
 
-    const topItems = document.createElement('div')
-
-    topItems.classList.add('top-items')
-
-    // Attach top level nodes
     shadow.appendChild(style)
-    shadow.appendChild(topItems)
+
+    this.createLinkArea(shadow)
+    this.createIcons(shadow)
+  }
+
+  /**
+   * Create link area node and attach it to parent.
+   * @param {HTMLElement} parent
+   */
+  createLinkArea(parent) {
+    const wrapper = document.createElement('div')
+
+    parent.appendChild(wrapper)
+
+    wrapper.classList.add('top-items')
 
     this.linkElements = links.map(link => {
       const el = document.createElement('my-link')
@@ -49,10 +58,10 @@ class MyStatusbar extends HTMLElement {
     // Append child nodes
     this.linkElements.forEach((el, i) => {
       if (i === center) {
-        topItems.appendChild(personIcon)
+        wrapper.appendChild(personIcon)
       }
 
-      topItems.appendChild(el)
+      wrapper.appendChild(el)
     })
 
     // outerHTML cannot set before attaching to DOM
@@ -64,12 +73,18 @@ class MyStatusbar extends HTMLElement {
     }
 
     window.addEventListener('popstate', this.popStateListener)
+  }
 
+  /**
+   * Create icon nodes and attach them to parent.
+   * @param {HTMLElement} parent Parent element attach to.
+   */
+  createIcons(parent) {
     const icons = document.createElement('div')
 
     icons.classList.add('icons')
 
-    shadow.appendChild(icons)
+    parent.appendChild(icons)
 
     const iconLinks = [
       createIconLink(githubSVG, 'https://github.com/pocka'),
