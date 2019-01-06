@@ -1,0 +1,128 @@
+$tail-width: 64px;
+$tail-height: 32px;
+
+@keyframes bound-scale-in {
+  0% {
+    transform: scale(0);
+  }
+
+  30% {
+    transform: scale(1.1);
+  }
+
+  50% {
+    transform: scale(0.93);
+  }
+
+  70% {
+    transform: scale(1.03);
+  }
+
+  90% {
+    transform: scale(0.98);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+:host {
+  position: relative;
+  display: inline-block;
+  padding: 16px 16px;
+  box-sizing: border-box;
+  min-width: 240px;
+
+  border: 1px solid #fefefe;
+  border-radius: 4px;
+  border-bottom-width: 0;
+  text-align: center;
+
+  animation: bound-scale-in 0.6s ease-in-out both;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    border-bottom: inherit;
+    border-bottom-width: 1px;
+    border-radius: inherit;
+  }
+
+  &::before {
+    left: 0;
+    right: $tail-width;
+
+    border-bottom-right-radius: 0;
+  }
+
+  &::after {
+    right: 0;
+    width: $tail-width / 2;
+
+    border-bottom-left-radius: 0;
+  }
+}
+
+:host([pop-direction='right']) {
+  &::before {
+    left: $tail-width;
+    right: 0;
+
+    border-bottom-right-radius: inherit;
+    border-bottom-left-radius: 0;
+  }
+
+  &::after {
+    left: 0;
+    right: auto;
+
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.tail-left,
+.tail-right {
+  position: absolute;
+  top: calc(100% - 1px);
+  height: $tail-height;
+
+  transform-origin: top left;
+}
+
+.tail-left {
+  right: $tail-width;
+
+  border-right: inherit;
+
+  transform: skewX(63.5deg);
+}
+
+.tail-right {
+  right: $tail-width / 2;
+
+  border-left: inherit;
+
+  transform: skewX(45deg);
+}
+
+:host([pop-direction='right']) {
+  & > .tail-left {
+    right: auto;
+    left: $tail-width;
+
+    transform: skewX(-63.5deg);
+  }
+
+  & > .tail-right {
+    right: auto;
+    left: $tail-width / 2;
+
+    transform: skewX(-45deg);
+  }
+}

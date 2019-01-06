@@ -15,11 +15,11 @@ const render = (ssr = false) => {
   const html = (() => {
     switch (path) {
       case '/':
-        return '<div>TOP</div>'
+        return 'TOP'
       case '/about':
-        return 'ABOUT'
+        return '<my-balloon>About</my-balloon>'
       case '/skill':
-        return 'SKILL'
+        return '<my-balloon pop-direction="right">Skill</my-balloon>'
       case '/works':
         return 'WORKS'
       case '/contact':
