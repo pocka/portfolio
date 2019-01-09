@@ -25,7 +25,9 @@ const render = (ssr = false) => {
       case '/works':
         return 'WORKS'
       case '/contact':
-        return 'CONTACT'
+        import('./components/scene-contact')
+
+        return '<scene-contact/>'
       default:
         return 'NOT FOUND'
     }

@@ -34,7 +34,7 @@ class MyBalloons extends HTMLElement {
 
       const el = document.createElement('my-balloon')
 
-      el.textContent = t
+      el.innerHTML = t
 
       wrapper.appendChild(el)
 
