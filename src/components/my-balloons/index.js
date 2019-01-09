@@ -28,7 +28,7 @@ class MyBalloons extends HTMLElement {
       throw new Error('texts must be an array')
     }
 
-    const els = texts.reverse().map((t, i) => {
+    const els = texts.map((t, i) => {
       const wrapper = document.createElement('div')
       wrapper.classList.add('balloon-wrapper')
 
