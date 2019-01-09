@@ -1,4 +1,4 @@
-import css from './style.scss'
+import css from '../balloons-scene.scss'
 
 class SceneTop extends HTMLElement {
   constructor() {
