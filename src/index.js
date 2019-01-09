@@ -15,7 +15,9 @@ const render = (ssr = false) => {
   const html = (() => {
     switch (path) {
       case '/':
-        return 'TOP'
+        import('./components/scene-top')
+
+        return '<scene-top/>'
       case '/about':
         return '<my-balloon>About</my-balloon>'
       case '/skill':

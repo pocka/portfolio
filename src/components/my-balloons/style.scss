@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+my-balloon:not([pop-direction="right"]) {
+  margin-left: -50%;
+}
+
+my-balloon[pop-direction="right"] {
+  margin-right: -50%;
+}
