@@ -19,9 +19,11 @@ const render = (ssr = false) => {
 
         return '<scene-top/>'
       case '/about':
-        return '<my-balloon>About</my-balloon>'
+        import('./components/scene-about')
+
+        return '<scene-about/>'
       case '/skill':
-        return '<my-balloon pop-direction="right">Skill</my-balloon>'
+        return 'SKILL'
       case '/works':
         return 'WORKS'
       case '/contact':
