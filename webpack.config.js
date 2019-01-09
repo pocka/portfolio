@@ -13,7 +13,7 @@ const paths = ['/', '/about/', '/skill/', '/works/', '/contact/']
 module.exports = {
   entry: {
     index: './src/index.js',
-    components: './src/components.js'
+    'common-components': './src/components/common.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
