@@ -51,6 +51,8 @@ $tail-height: 32px;
     border-bottom: inherit;
     border-bottom-width: 1px;
     border-radius: inherit;
+
+    pointer-events: none;
   }
 
   &::before {
