@@ -4,10 +4,14 @@
   align-items: center;
 }
 
-my-balloon:not([pop-direction="right"]) {
-  margin-left: -50%;
+.balloon-wrapper:not(.right) {
+  margin-right: 5em;
+
+  transform: translateX(-50%);
 }
 
-my-balloon[pop-direction="right"] {
-  margin-right: -50%;
+.balloon-wrapper.right {
+  margin-left: 5em;
+
+  transform: translateX(50%);
 }

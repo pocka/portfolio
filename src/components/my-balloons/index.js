@@ -28,12 +28,22 @@ class MyBalloons extends HTMLElement {
       throw new Error('texts must be an array')
     }
 
-    const els = texts.map(t => {
+    const els = texts.reverse().map((t, i) => {
+      const wrapper = document.createElement('div')
+      wrapper.classList.add('balloon-wrapper')
+
       const el = document.createElement('my-balloon')
 
       el.textContent = t
 
-      return el
+      wrapper.appendChild(el)
+
+      if (i % 2 !== 0) {
+        wrapper.classList.add('right')
+        el.setAttribute('pop-direction', 'right')
+      }
+
+      return wrapper
     })
 
     this.clearBalloons = () => {
