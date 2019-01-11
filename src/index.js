@@ -4,16 +4,6 @@ import './index.scss'
 const app = document.getElementById('app')
 
 /**
- * Prefetch all components for each routes.
- * TODO: Change to hover-to-prefetch
- */
-const prefetchAllRoutes = () => {
-  import('./components/scene-top')
-  import('./components/scene-about')
-  import('./components/scene-contact')
-}
-
-/**
  * Render components depends on route.
  *
  * @param {boolean} ssr Whether DOM is prerendered.
@@ -22,26 +12,28 @@ const render = (ssr = false) => {
   const path = location.pathname.replace(/(.+)\/$/, '$1')
 
   // Render each route
-  const [html, load] = (() => {
+  const html = (() => {
     switch (path) {
       case '/':
-        return ['<scene-top/>', import('./components/scene-top')]
+        import('./components/scene-top')
+
+        return '<scene-top/>'
       case '/about':
-        return ['<scene-about/>', import('./components/scene-about')]
+        import('./components/scene-about')
+
+        return '<scene-about/>'
       case '/skill':
-        return ['SKILL', Promise.resolve()]
+        return 'SKILL'
       case '/works':
-        return ['WORKS', Promise.resolve()]
+        return 'WORKS'
       case '/contact':
-        return ['<scene-contact/>', import('./components/scene-contact')]
+        import('./components/scene-contact')
+
+        return '<scene-contact/>'
       default:
-        return ['NOT FOUND', Promise.resolve()]
+        return 'NOT FOUND'
     }
   })()
-
-  load.then(() => {
-    prefetchAllRoutes()
-  })
 
   if (!ssr) {
     app.innerHTML = html

@@ -8,10 +8,22 @@ import twitterSVG from './twitter.svg'
 import { createIconLink } from './utils'
 
 const links = [
-  { label: 'about', path: '/about/' },
+  {
+    label: 'about',
+    path: '/about/',
+    prefetch() {
+      import('../scene-about')
+    }
+  },
   { label: 'skill', path: '/skill/' },
   { label: 'works', path: '/works/' },
-  { label: 'contact', path: '/contact/' }
+  {
+    label: 'contact',
+    path: '/contact/',
+    prefetch() {
+      import('../scene-contact')
+    }
+  }
 ]
 
 class MyStatusbar extends HTMLElement {
@@ -47,6 +59,19 @@ class MyStatusbar extends HTMLElement {
       el.classList.add('item')
       el.setAttribute('href', link.path)
       el.textContent = link.label
+
+      // Register module prefetching
+      if (link.prefetch) {
+        const prefetchTriggers = ['mouseover', 'focus']
+
+        const prefetch = () => {
+          link.prefetch()
+
+          prefetchTriggers.forEach(t => el.removeEventListener(t, prefetch))
+        }
+
+        prefetchTriggers.forEach(t => el.addEventListener(t, prefetch))
+      }
 
       return el
     })
