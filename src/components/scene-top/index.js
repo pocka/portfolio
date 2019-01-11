@@ -14,10 +14,12 @@ class SceneTop extends HTMLElement {
 
     const balloons = document.createElement('my-balloons')
 
-    balloons.setAttribute('texts', JSON.stringify(['Hi, I\'m pocka']))
+    balloons.setAttribute('texts', JSON.stringify(["Hi, I'm pocka"]))
 
     shadow.appendChild(balloons)
   }
 }
 
-customElements.define('scene-top', SceneTop)
+if (!customElements.get('scene-top')) {
+  customElements.define('scene-top', SceneTop)
+}

@@ -28,4 +28,6 @@ class SceneAbout extends HTMLElement {
   }
 }
 
-customElements.define('scene-about', SceneAbout)
+if (!customElements.get('scene-about')) {
+  customElements.define('scene-about', SceneAbout)
+}

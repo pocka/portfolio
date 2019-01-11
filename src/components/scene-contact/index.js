@@ -25,4 +25,6 @@ class SceneContact extends HTMLElement {
   }
 }
 
-customElements.define('scene-contact', SceneContact)
+if (!customElements.get('scene-contact')) {
+  customElements.define('scene-contact', SceneContact)
+}
