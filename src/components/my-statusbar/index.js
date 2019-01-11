@@ -62,7 +62,7 @@ class MyStatusbar extends HTMLElement {
 
       // Register module prefetching
       if (link.prefetch) {
-        const prefetchTriggers = ['mouseover', 'focus']
+        const prefetchTriggers = ['mouseover', 'focus', 'touchstart']
 
         const prefetch = () => {
           link.prefetch()
