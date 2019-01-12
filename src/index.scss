@@ -22,6 +22,15 @@ body {
 
 #app {
   flex-grow: 1;
+
+  opacity: 1;
+  transition: opacity 0.3s ease;
+
+  &[data-state="out"] {
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.25s ease 0.05s, opacity 0.2s ease;
+  }
 }
 
 my-statusbar {

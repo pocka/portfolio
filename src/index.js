@@ -4,6 +4,26 @@ import './index.scss'
 const app = document.getElementById('app')
 
 /**
+ * Fade out #app and returns Promise with fade in function.
+ *
+ * @returns {Promise<function>} A function to fade in.
+ */
+const fadeContainer = () =>
+  new Promise(resolve => {
+    app.dataset.state = 'out'
+
+    const resolvePromise = () => {
+      app.removeEventListener('transitionend', resolvePromise)
+
+      resolve(() => {
+        app.dataset.state = ''
+      })
+    }
+
+    app.addEventListener('transitionend', resolvePromise)
+  })
+
+/**
  * Render components depends on route.
  *
  * @param {boolean} ssr Whether DOM is prerendered.
@@ -12,31 +32,31 @@ const render = (ssr = false) => {
   const path = location.pathname.replace(/(.+)\/$/, '$1')
 
   // Render each route
-  const html = (() => {
+  const [html, load] = (() => {
     switch (path) {
       case '/':
-        import('./components/scene-top')
-
-        return '<scene-top/>'
+        return ['<scene-top/>', import('./components/scene-top')]
       case '/about':
-        import('./components/scene-about')
-
-        return '<scene-about/>'
+        return ['<scene-about/>', import('./components/scene-about')]
       case '/skill':
-        return 'SKILL'
+        return ['SKILL', Promise.resolve()]
       case '/works':
-        return 'WORKS'
+        return ['WORKS', Promise.resolve()]
       case '/contact':
-        import('./components/scene-contact')
-
-        return '<scene-contact/>'
+        return ['<scene-contact/>', import('./components/scene-contact')]
       default:
-        return 'NOT FOUND'
+        return ['NOT FOUND', Promise.resolve()]
     }
   })()
 
   if (!ssr) {
-    app.innerHTML = html
+    fadeContainer().then(fadein => {
+      app.innerHTML = html
+
+      load.then(() => {
+        fadein()
+      })
+    })
   }
 }
 
