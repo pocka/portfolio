@@ -18,6 +18,7 @@ body {
 
   background-color: $color-bg;
   color: $color-fg;
+  font-family: 'Roboto', sans-serif;
 }
 
 #app {
@@ -27,7 +28,7 @@ body {
   opacity: 1;
   transition: opacity 0.3s ease;
 
-  &[data-state="out"] {
+  &[data-state='out'] {
     transform: translateY(-100%);
     opacity: 0;
     transition: transform 0.25s ease 0.05s, opacity 0.2s ease;
@@ -36,6 +37,8 @@ body {
 
 my-statusbar {
   flex-shrink: 0;
+
+  font-family: 'Passero One', cursive, sans-serif;
 }
 
 my-balloon:not(:defined) {
