@@ -55,11 +55,11 @@ const render = (ssr = false) => {
       return
     }
 
-    fadeContainer().then(fadein => {
+    fadeContainer().then(fadeIn => {
       app.innerHTML = html
 
       load.then(() => {
-        fadein()
+        fadeIn()
       })
     })
   }
