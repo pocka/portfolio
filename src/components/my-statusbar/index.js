@@ -70,7 +70,9 @@ class MyStatusbar extends HTMLElement {
           prefetchTriggers.forEach(t => el.removeEventListener(t, prefetch))
         }
 
-        prefetchTriggers.forEach(t => el.addEventListener(t, prefetch))
+        prefetchTriggers.forEach(t =>
+          el.addEventListener(t, prefetch, { passive: true })
+        )
       }
 
       return el
