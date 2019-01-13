@@ -4,6 +4,21 @@ import './index.scss'
 const app = document.getElementById('app')
 
 /**
+ * Creates <meta name="description"> and returns it.
+ *
+ * @returns {HTMLElement} <meta name="description">
+ */
+const createDescription = () => {
+  const meta = document.createElement('meta')
+
+  meta.setAttribute('name', 'description')
+
+  document.querySelector('head').appendChild(meta)
+
+  return meta
+}
+
+/**
  * Fade out #app and returns Promise with fade in function.
  *
  * @returns {Promise<function>} A function to fade in.
@@ -31,32 +46,42 @@ const fadeContainer = () =>
 const render = (ssr = false) => {
   const path = location.pathname.replace(/(.+)\/$/, '$1')
 
+  const defaultDescription = 'pocka\'s portfolio'
+
   // Render each route
-  const [html, load] = (() => {
+  const [html, description, load] = (() => {
     switch (path) {
       case '/':
-        return ['<scene-top/>', import('./components/scene-top')]
+        return ['<scene-top/>', defaultDescription, import('./components/scene-top')]
       case '/about':
-        return ['<scene-about/>', import('./components/scene-about')]
+        return ['<scene-about/>', 'Detailed information', import('./components/scene-about')]
       case '/skill':
-        return ['SKILL', Promise.resolve()]
+        return ['SKILL', 'Skills and its degree', Promise.resolve()]
       case '/works':
-        return ['WORKS', Promise.resolve()]
+        return ['WORKS', 'Websites and softwares made by pocka', Promise.resolve()]
       case '/contact':
-        return ['<scene-contact/>', import('./components/scene-contact')]
+        return ['<scene-contact/>', 'How to contact', import('./components/scene-contact')]
       default:
-        return ['NOT FOUND', Promise.resolve()]
+        return ['NOT FOUND', defaultDescription, Promise.resolve()]
     }
   })()
 
   if (!ssr) {
-    if (window.PRERENDER) {
+    const apply = () => {
       app.innerHTML = html
+
+      const descriptionTag = document.querySelector('meta[name="description"]') || createDescription()
+
+      descriptionTag.setAttribute('value', description)
+    }
+
+    if (window.PRERENDER) {
+      apply()
       return
     }
 
     fadeContainer().then(fadeIn => {
-      app.innerHTML = html
+      apply()
 
       load.then(() => {
         fadeIn()
