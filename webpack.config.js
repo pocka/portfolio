@@ -106,6 +106,7 @@ module.exports = {
             process.env.NODE_ENV === 'production'
               ? `!prerender-loader?${JSON.stringify({
                   string: true,
+                  entry: './src/index.js',
                   documentUrl: 'http://localhost' + p
                 })}!./src/index.html`
               : './src/index.html',
