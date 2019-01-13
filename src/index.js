@@ -72,7 +72,7 @@ const render = (ssr = false) => {
 
       const descriptionTag = document.querySelector('meta[name="description"]') || createDescription()
 
-      descriptionTag.setAttribute('value', description)
+      descriptionTag.setAttribute('content', description)
     }
 
     if (window.PRERENDER) {
