@@ -1,4 +1,4 @@
-export const createIconLink = (svg, href) => {
+export const createIconLink = (svg, href, label) => {
   const el = document.createElement('a')
 
   el.classList.add('icon-link')
@@ -6,6 +6,7 @@ export const createIconLink = (svg, href) => {
   el.innerHTML = svg
   el.setAttribute('target', '_blank')
   el.setAttribute('rel', 'noopener')
+  el.setAttribute('title', label)
 
   return el
 }

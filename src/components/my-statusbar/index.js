@@ -114,9 +114,9 @@ class MyStatusbar extends HTMLElement {
     parent.appendChild(icons)
 
     const iconLinks = [
-      createIconLink(githubSVG, 'https://github.com/pocka'),
-      createIconLink(twitterSVG, 'https://twitter.com/pockaquel'),
-      createIconLink(emailSVG, 'mailto:pockawoooh@gmail.com')
+      createIconLink(githubSVG, 'https://github.com/pocka', 'GitHub profile'),
+      createIconLink(twitterSVG, 'https://twitter.com/pockaquel', 'Twitter profile'),
+      createIconLink(emailSVG, 'mailto:pockawoooh@gmail.com', 'Email')
     ]
 
     iconLinks.forEach(el => {
