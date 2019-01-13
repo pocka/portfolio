@@ -6,6 +6,8 @@ const ScriptExtHtmlPlugin = require('script-ext-html-webpack-plugin')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const ImageminPlugin = require('imagemin-webpack-plugin').default
+
 const pkg = require('./package.json')
 
 const paths = ['/', '/about/', '/skill/', '/works/', '/contact/']
@@ -55,6 +57,10 @@ module.exports = {
         ]
       },
       {
+        test: /\.png$/,
+        loader: 'file-loader'
+      },
+      {
         test: /\.svg$/,
         use: [
           'raw-loader',
@@ -98,6 +104,11 @@ module.exports = {
   },
   devtool: process.env.NODE_ENV === 'production' ? false : 'cheap-source-map',
   plugins: [
+    new ImageminPlugin({
+      optipng: {
+        optimizationLevel: 5
+      }
+    }),
     new MiniCssExtractPlugin(),
     ...paths.map(
       p =>

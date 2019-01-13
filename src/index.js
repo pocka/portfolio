@@ -98,5 +98,12 @@ render(!!document.body.dataset.prerendered)
 
 // Executed only when prerender
 export default async () => {
+  const link = document.createElement('link')
+
+  link.rel = 'shortcut icon'
+  link.href = (await import('./favicon.png')).default
+
+  document.querySelector('head').appendChild(link)
+
   document.body.dataset.prerendered = 'true'
 }
