@@ -50,6 +50,11 @@ const render = (ssr = false) => {
   })()
 
   if (!ssr) {
+    if (window.PRERENDER) {
+      app.innerHTML = html
+      return
+    }
+
     fadeContainer().then(fadein => {
       app.innerHTML = html
 
