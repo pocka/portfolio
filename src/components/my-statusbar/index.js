@@ -12,7 +12,7 @@ const links = [
     label: 'about',
     path: '/about/',
     prefetch() {
-      import('../scene-about')
+      import('../../pages/about')
     }
   },
   { label: 'skill', path: '/skill/' },
@@ -21,7 +21,7 @@ const links = [
     label: 'contact',
     path: '/contact/',
     prefetch() {
-      import('../scene-contact')
+      import('../../pages/contact')
     }
   }
 ]

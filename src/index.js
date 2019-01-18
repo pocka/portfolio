@@ -46,34 +46,38 @@ const fadeContainer = () =>
 const render = (ssr = false) => {
   const path = location.pathname.replace(/(.+)\/$/, '$1')
 
-  const defaultDescription = 'pocka\'s portfolio'
+  const defaultDescription = "pocka's portfolio"
 
-  // Render each route
-  const [html, description, load] = (() => {
+  const load = (() => {
     switch (path) {
       case '/':
-        return ['<scene-top/>', defaultDescription, import('./components/scene-top')]
+        return import('./pages/top')
       case '/about':
-        return ['<scene-about/>', 'Detailed information', import('./components/scene-about')]
+        return import('./pages/about')
       case '/skill':
-        return ['SKILL', 'Skills and its degree', Promise.resolve()]
+        return import('./pages/404')
       case '/works':
-        return ['WORKS', 'Websites and softwares made by pocka', Promise.resolve()]
+        return import('./pages/404')
       case '/contact':
-        return ['<scene-contact/>', 'How to contact', import('./components/scene-contact')]
+        return import('./pages/contact')
       default:
-        return ['NOT FOUND', defaultDescription, Promise.resolve()]
+        return import('./pages/404')
     }
   })()
 
   if (!ssr) {
-    const apply = () => {
-      app.innerHTML = html
+    const apply = () =>
+      load.then(({ render, description = defaultDescription }) => {
+        app.innerHTML = ''
 
-      const descriptionTag = document.querySelector('meta[name="description"]') || createDescription()
+        render(app)
 
-      descriptionTag.setAttribute('content', description)
-    }
+        const descriptionTag =
+          document.querySelector('meta[name="description"]') ||
+          createDescription()
+
+        descriptionTag.setAttribute('content', description)
+      })
 
     if (window.PRERENDER) {
       apply()
@@ -81,9 +85,7 @@ const render = (ssr = false) => {
     }
 
     fadeContainer().then(fadeIn => {
-      apply()
-
-      load.then(() => {
+      apply().then(() => {
         fadeIn()
       })
     })
