@@ -1,15 +1,13 @@
 import('../components/my-balloons-container')
 
 export const render = container => {
-  const c = document.createElement('my-balloons-container')
-
-  container.appendChild(c)
-
-  const balloons = document.createElement('my-balloons')
-
-  balloons.setAttribute('texts', JSON.stringify(['Are you lost?']))
-
-  c.appendChild(balloons)
+  container.innerHTML = `
+    <my-balloons-container>
+      <my-balloons>
+        <my-balloon>Are you lost?</my-balloon>
+      </my-balloons>
+    </my-balloons-container>
+  `
 }
 
 export const description = null

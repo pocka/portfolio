@@ -2,8 +2,11 @@
 
 A set of balloons.
 
-## Attributes
+## Usage
 
-| Name    | Data type                      | Description                   |
-| ------- | ------------------------------ | ----------------------------- |
-| `texts` | String (JSON, array of string) | Texts to be shown as balloons |
+```html
+<my-balloons>
+  <my-balloon>foo</my-balloon>
+  <my-balloon pop-direction="right">foo</my-balloon>
+</my-balloons>
+```
