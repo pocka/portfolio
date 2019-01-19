@@ -6,18 +6,11 @@ class MyContainer extends HTMLElement {
 
     const shadow = this.attachShadow({ mode: 'open' })
 
-    const slot = document.createElement('slot')
-
-    shadow.appendChild(slot)
-
-    const style = document.createElement('style')
-
-    style.textContent = css
-
-    shadow.appendChild(style)
+    shadow.innerHTML = `
+      <style>${css}</style>
+      <slot/>
+    `
   }
 }
 
-if (!customElements.get('my-container')) {
-  customElements.define('my-container', MyContainer)
-}
+customElements.define('my-container', MyContainer)
