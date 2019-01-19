@@ -1,8 +1,6 @@
-import('../components/my-balloons-container')
-
 export const render = container => {
   container.innerHTML = `
-    <my-balloons-container>
+    <my-container>
       <my-balloons>
         <my-balloon>
           If you have any questions,<br/>
@@ -12,7 +10,7 @@ export const render = container => {
           </a>
         </my-balloon>
       </my-balloons>
-    </my-balloons-container>
+    </my-container>
   `
 }
 

@@ -1,8 +1,6 @@
-import('../components/my-balloons-container')
-
 export const render = container => {
   container.innerHTML = `
-    <my-balloons-container>
+    <my-container>
       <my-balloons>
         <my-balloon>I'm a front end developer in Japan.</my-balloon>
         <my-balloon pop-direction="right">
@@ -13,7 +11,7 @@ export const render = container => {
           Less knowledge and experience at designing UI, but more at UX.
         </my-balloon>
       </my-balloons>
-    </my-balloons-container>
+    </my-container>
   `
 }
 

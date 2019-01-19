@@ -1,6 +1,6 @@
 import css from './style.scss'
 
-class MyBalloonsContainer extends HTMLElement {
+class MyContainer extends HTMLElement {
   constructor() {
     super()
 
@@ -18,6 +18,6 @@ class MyBalloonsContainer extends HTMLElement {
   }
 }
 
-if (!customElements.get('my-balloons-container')) {
-  customElements.define('my-balloons-container', MyBalloonsContainer)
+if (!customElements.get('my-container')) {
+  customElements.define('my-container', MyContainer)
 }
