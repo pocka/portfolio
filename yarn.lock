@@ -7752,6 +7752,11 @@ uglify-js@3.4.x:
     commander "~2.17.1"
     source-map "~0.6.1"
 
+uglify-template-string-loader@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/uglify-template-string-loader/-/uglify-template-string-loader-1.1.0.tgz#23074e028963113b15e6e595c4c464c9e51fe085"
+  integrity sha512-0cy/jPNeRtGRps6UexZSBz+q3x9LiqPhPQzkAdQz3u9njSDsF3aP+S8BFdBSTqvLaJqzb9eY30d4Wso1VcHmdQ==
+
 unbzip2-stream@^1.0.9:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/unbzip2-stream/-/unbzip2-stream-1.3.1.tgz#7854da51622a7e63624221196357803b552966a1"

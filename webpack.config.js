@@ -28,10 +28,13 @@ module.exports = {
       {
         test: /\.m?js$/,
         exclude: /\/node_modules\//,
-        use: {
-          loader: 'babel-loader',
-          options: pkg.babel
-        }
+        use: [
+          {
+            loader: 'babel-loader',
+            options: pkg.babel
+          },
+          'uglify-template-string-loader'
+        ]
       },
       {
         test: /\.scss$/,
