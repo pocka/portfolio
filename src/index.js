@@ -55,7 +55,7 @@ const render = (ssr = false) => {
       case '/about':
         return import('~/pages/about')
       case '/skill':
-        return import('~/pages/404')
+        return import('~/pages/skill')
       case '/works':
         return import('~/pages/404')
       case '/contact':

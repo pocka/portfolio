@@ -1,0 +1,108 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+}
+
+$selector-size: 216px;
+
+.icons {
+  position: relative;
+  width: $selector-size;
+  height: $selector-size;
+}
+
+::slotted([slot="icon"]) {
+  $center: $selector-size / 2;
+  $size: 32px;
+
+  display: block;
+  position: absolute;
+  top: calc(#{$center} - #{$size / 2});
+  left: calc(#{$center} - #{$size / 2});
+  width: $size;
+  height: $size;
+
+  overflow: hidden;
+
+  transition: transform 0.2s ease;
+}
+
+.selector {
+  width: $selector-size;
+  margin-top: 144px;
+}
+
+.control {
+  display: flex;
+  margin-top: 48px;
+}
+
+%arrow {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 1em;
+  height: 1em;
+
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.prev {
+  @extend %arrow;
+
+  margin-left: -0.5em;
+
+  border: {
+    top: 0.5em solid transparent;
+    right: 0.5em solid currentColor;
+    bottom: 0.5em solid transparent;
+  }
+}
+
+.next {
+  @extend %arrow;
+
+  margin-right: -0.5em;
+
+  border: {
+    top: 0.5em solid transparent;
+    bottom: 0.5em solid transparent;
+    left: 0.5em solid currentColor;
+  }
+}
+
+.labels-wrapper {
+  flex-grow: 1;
+  height: 1em;
+
+  overflow: hidden;
+}
+
+.labels {
+  display: flex;
+
+  transition: transform 0.3s ease-in-out;
+}
+
+::slotted([slot="label"]) {
+  display: inline-block;
+  width: 100%;
+  flex-shrink: 0;
+
+  text-align: center;
+}
+
+::slotted(my-balloons) {
+  display: none;
+  position: absolute;
+  bottom: 80px;
+
+  transition: opacity 0.1s ease;
+}
+
+::slotted(.active-balloons) {
+  display: flex;
+}
