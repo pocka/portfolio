@@ -1,4 +1,4 @@
-import('~/components/my-explainer')
+import '~/components/my-explainer'
 
 export const render = container => {
   container.innerHTML = `
