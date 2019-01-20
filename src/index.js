@@ -51,17 +51,17 @@ const render = (ssr = false) => {
   const load = (() => {
     switch (path) {
       case '/':
-        return import('./pages/top')
+        return import('~/pages/top')
       case '/about':
-        return import('./pages/about')
+        return import('~/pages/about')
       case '/skill':
-        return import('./pages/404')
+        return import('~/pages/404')
       case '/works':
-        return import('./pages/404')
+        return import('~/pages/404')
       case '/contact':
-        return import('./pages/contact')
+        return import('~/pages/contact')
       default:
-        return import('./pages/404')
+        return import('~/pages/404')
     }
   })()
 
