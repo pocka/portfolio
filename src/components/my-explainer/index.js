@@ -125,7 +125,7 @@ class MyExplainer extends HTMLElement {
       // Add 90deg because position starts with [1, 0]
       const [x, y] = getPosition(radius, interval * index + 90)
 
-      icon.style.transform = `translate(${x}px, ${y}px)`
+      icon.style.transform = `translate(${-x}px, ${y}px)`
 
       if (index === 0) {
         icon.classList.add('active')
