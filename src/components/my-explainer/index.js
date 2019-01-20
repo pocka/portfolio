@@ -27,13 +27,13 @@ class MyExplainer extends HTMLElement {
         </div>
 
         <div class="control">
-          <a role="button" class="prev"></a>
+          <a role="button" class="prev" aria-label="Prev item"></a>
           <div class="labels-wrapper">
             <div class="labels">
               <slot class="label" name="label"/>
             </div>
           </div>
-          <a role="button" class="next"></a>
+          <a role="button" class="next" aria-label="Next item"></a>
         </div>
       </div>
 
