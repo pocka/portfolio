@@ -118,7 +118,7 @@ class MyExplainer extends HTMLElement {
 
     icons.forEach((icon, i) => {
       const index =
-        i - this.current <= 0
+        i - this.current < 0
           ? iconCounts + (i - this.current)
           : i - this.current
 
@@ -126,6 +126,12 @@ class MyExplainer extends HTMLElement {
       const [x, y] = getPosition(radius, interval * index + 90)
 
       icon.style.transform = `translate(${x}px, ${y}px)`
+
+      if (index === 0) {
+        icon.classList.add('active')
+      } else {
+        icon.classList.remove('active')
+      }
     })
 
     // ------------------------------
