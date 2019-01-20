@@ -41,6 +41,9 @@ my-statusbar {
   font-family: 'Passero One', cursive, sans-serif;
 }
 
-my-balloon:not(:defined) {
-  display: none;
+my-balloon,
+my-explainer {
+  &:not(:defined) {
+    visibility: hidden;
+  }
 }
