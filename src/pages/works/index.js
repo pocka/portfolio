@@ -11,7 +11,7 @@ export const render = container => {
         ${logPockaIoLogo}
       </my-work>
       <my-work name="storybook-addon-vue-info" href="https://github.com/pocka/storybook-addon-vue-info">
-        <img src="${saviLogo}">
+        <img src="${saviLogo}" alt="storybook-addon-vue-info logo">
       </my-work>
     </my-works>
   `
