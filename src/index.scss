@@ -42,7 +42,8 @@ my-statusbar {
 }
 
 my-balloon,
-my-explainer {
+my-explainer,
+my-works {
   &:not(:defined) {
     visibility: hidden;
   }
