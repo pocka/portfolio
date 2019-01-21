@@ -57,7 +57,7 @@ const render = (ssr = false) => {
       case '/skill':
         return import('~/pages/skill')
       case '/works':
-        return import('~/pages/404')
+        return import('~/pages/works')
       case '/contact':
         return import('~/pages/contact')
       default:
