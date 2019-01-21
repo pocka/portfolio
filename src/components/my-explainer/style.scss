@@ -29,10 +29,16 @@ $selector-size: 216px;
 
   opacity: 0.5;
   transition: transform 0.2s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+
+::slotted([slot='icon']:hover) {
+  opacity: 0.7;
 }
 
 ::slotted(.active[slot='icon']) {
   opacity: 1;
+  cursor: default;
 }
 
 .selector {

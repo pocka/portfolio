@@ -53,6 +53,16 @@ class MyExplainer extends HTMLElement {
     this.icons = shadow.querySelector('slot[name="icon"]')
     this.iconContainer = shadow.querySelector('.icons')
 
+    ;[...this.icons.assignedNodes()].forEach((icon, i) => {
+      icon.addEventListener('click', () => {
+        if (this.current === i) {
+          return
+        }
+
+        this.jumpTo(i)
+      })
+    })
+
     shadow.querySelector('.prev').addEventListener('click', () => {
       this.decrement()
     })
@@ -85,6 +95,15 @@ class MyExplainer extends HTMLElement {
     }
 
     this.current = this.current <= 0 ? this.slotCount.min - 1 : this.current - 1
+    this.updateStyle()
+  }
+
+  jumpTo(index) {
+    if (!this.navigatable) {
+      return
+    }
+
+    this.current = index
     this.updateStyle()
   }
 
