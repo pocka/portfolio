@@ -2,19 +2,32 @@ import css from './style.scss'
 
 import { getPosition } from './math'
 
+interface SlotCount {
+  icon: number
+  label: number
+  main: number
+  min: number
+  [other: string]: number
+}
+
 class MyExplainer extends HTMLElement {
+  private slotCount: SlotCount = {
+    icon: 0,
+    label: 0,
+    main: 0,
+    min: 0
+  }
+
+  private current = 0
+  private navigatable = true
+
+  private labels: HTMLElement
+  private iconContainer: HTMLElement
+  private balloons: HTMLSlotElement
+  private icons: HTMLSlotElement
+
   constructor() {
     super()
-
-    this.slotCount = {
-      icon: 0,
-      label: 0,
-      main: 0,
-      min: 0
-    }
-
-    this.current = 0
-    this.navigatable = true
 
     const shadow = this.attachShadow({ mode: 'open' })
 
@@ -39,37 +52,37 @@ class MyExplainer extends HTMLElement {
 
       <slot/>
     `
-    ;[...shadow.querySelectorAll('slot')].forEach(slot => {
+
+    for (const slot of [...shadow.querySelectorAll('slot')]) {
       slot.addEventListener('slotchange', ev => {
         this.slotCount[
           slot.getAttribute('name') || 'main'
         ] = slot.assignedNodes().length
+
         this.updateSlotsCount()
       })
-    })
+    }
 
-    this.labels = shadow.querySelector('.labels')
-    this.balloons = shadow.querySelector('slot:not([name])')
-    this.icons = shadow.querySelector('slot[name="icon"]')
-    this.iconContainer = shadow.querySelector('.icons')
+    this.labels = shadow.querySelector('.labels') as HTMLElement
+    this.balloons = shadow.querySelector('slot:not([name])') as HTMLSlotElement
+    this.icons = shadow.querySelector('slot[name="icon"]') as HTMLSlotElement
+    this.iconContainer = shadow.querySelector('.icons') as HTMLElement
 
-    ;[...this.icons.assignedNodes()].forEach((icon, i) => {
-      icon.addEventListener('click', () => {
-        if (this.current === i) {
-          return
-        }
+    for (
+      let icons = this.icons.assignedNodes() as HTMLElement[],
+        i = 0,
+        l = icons.length;
+      i < l;
+      i++
+    ) {
+      icons[i].dataset.index = i.toString(10)
 
-        this.jumpTo(i)
-      })
-    })
+      icons[i].addEventListener('click', this.onClickIcon)
+    }
 
-    shadow.querySelector('.prev').addEventListener('click', () => {
-      this.decrement()
-    })
+    shadow.querySelector('.prev')!.addEventListener('click', this.decrement)
 
-    shadow.querySelector('.next').addEventListener('click', () => {
-      this.increment()
-    })
+    shadow.querySelector('.next')!.addEventListener('click', this.increment)
 
     this.updateStyle()
   }
@@ -77,7 +90,7 @@ class MyExplainer extends HTMLElement {
   /**
    * Increment index.
    */
-  increment() {
+  private increment = () => {
     if (!this.navigatable) {
       return
     }
@@ -89,7 +102,7 @@ class MyExplainer extends HTMLElement {
   /**
    * Decrement index.
    */
-  decrement() {
+  private decrement = () => {
     if (!this.navigatable) {
       return
     }
@@ -98,14 +111,25 @@ class MyExplainer extends HTMLElement {
     this.updateStyle()
   }
 
-  jumpTo(index) {
-    if (!this.navigatable) {
+  private onClickIcon = (ev: Event) => {
+    const index = parseInt((ev.currentTarget as HTMLElement).dataset.index!, 10)
+
+    if (this.current === index || !this.navigatable) {
       return
     }
 
     this.current = index
     this.updateStyle()
   }
+
+  // jumpTo(index) {
+  //   if (!this.navigatable) {
+  //     return
+  //   }
+
+  //   this.current = index
+  //   this.updateStyle()
+  // }
 
   updateSlotsCount() {
     this.slotCount.min = Math.min(
@@ -119,7 +143,7 @@ class MyExplainer extends HTMLElement {
     // ------------------------------
     // Set icon rotation
 
-    const icons = [...this.icons.assignedNodes()]
+    const icons = [...this.icons.assignedNodes()] as HTMLElement[]
 
     // Avoid zero divide by setting 1
     const iconCounts = icons.length || 1
@@ -161,7 +185,7 @@ class MyExplainer extends HTMLElement {
     // ------------------------------
     // Set whether balloon is visible
 
-    const balloons = [...this.balloons.assignedNodes()]
+    const balloons = [...this.balloons.assignedNodes()] as HTMLElement[]
 
     const nextBalloon = balloons.filter((_, i) => i === this.current)[0]
     const prevBalloon = balloons.filter(el =>
@@ -180,7 +204,7 @@ class MyExplainer extends HTMLElement {
         this.navigatable = true
       }
 
-      prevBalloon.style.opacity = 0
+      prevBalloon.style.opacity = '0'
 
       this.navigatable = false
       prevBalloon.addEventListener('transitionend', hideBalloon)
