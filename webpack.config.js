@@ -8,6 +8,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const ImageminPlugin = require('imagemin-webpack-plugin').default
 
+const ForkTsCheckerPlugin = require('fork-ts-checker-webpack-plugin')
+
 const pkg = require('./package.json')
 
 const paths = ['/', '/about/', '/skill/', '/works/', '/contact/']
@@ -26,7 +28,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.m?js$/,
+        test: /\.(m?js|ts)$/,
         exclude: /\/node_modules\//,
         use: [
           {
@@ -109,7 +111,8 @@ module.exports = {
   resolve: {
     alias: {
       '~': path.resolve(__dirname, 'src')
-    }
+    },
+    extensions: ['.js', '.mjs', '.ts']
   },
   plugins: [
     new ImageminPlugin({
@@ -145,6 +148,7 @@ module.exports = {
     new ScriptExtHtmlPlugin({
       defaultAttribute: 'async',
       defer: /index\..*\.js/
-    })
+    }),
+    new ForkTsCheckerPlugin()
   ]
 }

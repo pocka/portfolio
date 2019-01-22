@@ -25,10 +25,13 @@
           "modules": false,
           "useBuiltIns": "usage"
         }
-      ]
+      ],
+      "@babel/preset-typescript"
     ],
     "plugins": [
-      "@babel/plugin-syntax-dynamic-import"
+      "@babel/plugin-syntax-dynamic-import",
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-object-rest-spread"
     ]
   },
   "postcss": {
@@ -45,13 +48,17 @@
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.2.3",
+    "@babel/preset-typescript": "^7.1.0",
     "babel-loader": "^8.0.4",
     "core-js": "^2.6.1",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.8",
     "file-loader": "^3.0.1",
+    "fork-ts-checker-webpack-plugin": "^0.5.2",
     "html-webpack-plugin": "^3.2.0",
     "imagemin-webpack-plugin": "^2.4.0",
     "mini-css-extract-plugin": "^0.5.0",
@@ -68,6 +75,7 @@
     "style-ext-html-webpack-plugin": "^4.0.1",
     "svgo": "^1.1.1",
     "svgo-loader": "^2.2.0",
+    "typescript": "^3.2.4",
     "uglify-template-string-loader": "^1.1.0",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
