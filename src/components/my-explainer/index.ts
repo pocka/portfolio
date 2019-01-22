@@ -2,29 +2,18 @@ import css from './style.scss'
 
 import { getPosition } from './math'
 
-interface SlotCount {
-  icon: number
-  label: number
-  main: number
-  min: number
-  [other: string]: number
-}
-
 class MyExplainer extends HTMLElement {
-  private slotCount: SlotCount = {
-    icon: 0,
-    label: 0,
-    main: 0,
-    min: 0
-  }
-
+  private slotsCount = 0
   private current = 0
   private navigatable = true
 
   private labels: HTMLElement
   private iconContainer: HTMLElement
   private balloons: HTMLSlotElement
-  private icons: HTMLSlotElement
+  private iconSlot: HTMLSlotElement
+
+  private prev: HTMLElement
+  private next: HTMLElement
 
   constructor() {
     super()
@@ -53,38 +42,46 @@ class MyExplainer extends HTMLElement {
       <slot/>
     `
 
-    for (const slot of [...shadow.querySelectorAll('slot')]) {
-      slot.addEventListener('slotchange', ev => {
-        this.slotCount[
-          slot.getAttribute('name') || 'main'
-        ] = slot.assignedNodes().length
-
-        this.updateSlotsCount()
-      })
-    }
-
     this.labels = shadow.querySelector('.labels') as HTMLElement
     this.balloons = shadow.querySelector('slot:not([name])') as HTMLSlotElement
-    this.icons = shadow.querySelector('slot[name="icon"]') as HTMLSlotElement
     this.iconContainer = shadow.querySelector('.icons') as HTMLElement
 
-    for (
-      let icons = this.icons.assignedNodes() as HTMLElement[],
-        i = 0,
-        l = icons.length;
-      i < l;
-      i++
-    ) {
-      icons[i].dataset.index = i.toString(10)
+    this.iconSlot = shadow.querySelector('slot[name="icon"]') as HTMLSlotElement
 
+    this.prev = shadow.querySelector('.prev') as HTMLElement
+    this.next = shadow.querySelector('.next') as HTMLElement
+  }
+
+  connectedCallback() {
+    this.slotsCount = Math.min(
+      ...[...this.shadowRoot!.querySelectorAll('slot')].map(
+        slot => slot.assignedNodes().length
+      )
+    )
+
+    const icons = this.iconSlot.assignedNodes() as HTMLElement[]
+
+    for (let i = 0, l = icons.length; i < l; i++) {
+      icons[i].dataset.index = i.toString(10)
       icons[i].addEventListener('click', this.onClickIcon)
     }
 
-    shadow.querySelector('.prev')!.addEventListener('click', this.decrement)
-
-    shadow.querySelector('.next')!.addEventListener('click', this.increment)
+    this.prev.addEventListener('click', this.decrement)
+    this.next.addEventListener('click', this.increment)
 
     this.updateStyle()
+  }
+
+  disconnectedCallback() {
+    const icons = this.iconSlot.assignedNodes() as HTMLElement[]
+
+    for (let i = 0, l = icons.length; i < l; i++) {
+      delete icons[i].dataset.index
+      icons[i].removeEventListener('click', this.onClickIcon)
+    }
+
+    this.prev.removeEventListener('click', this.decrement)
+    this.next.removeEventListener('click', this.increment)
   }
 
   /**
@@ -95,7 +92,7 @@ class MyExplainer extends HTMLElement {
       return
     }
 
-    this.current = this.current >= this.slotCount.min - 1 ? 0 : this.current + 1
+    this.current = this.current >= this.slotsCount - 1 ? 0 : this.current + 1
     this.updateStyle()
   }
 
@@ -107,7 +104,7 @@ class MyExplainer extends HTMLElement {
       return
     }
 
-    this.current = this.current <= 0 ? this.slotCount.min - 1 : this.current - 1
+    this.current = this.current <= 0 ? this.slotsCount - 1 : this.current - 1
     this.updateStyle()
   }
 
@@ -122,28 +119,11 @@ class MyExplainer extends HTMLElement {
     this.updateStyle()
   }
 
-  // jumpTo(index) {
-  //   if (!this.navigatable) {
-  //     return
-  //   }
-
-  //   this.current = index
-  //   this.updateStyle()
-  // }
-
-  updateSlotsCount() {
-    this.slotCount.min = Math.min(
-      this.slotCount.icon,
-      this.slotCount.label,
-      this.slotCount.main
-    )
-  }
-
   updateStyle() {
     // ------------------------------
     // Set icon rotation
 
-    const icons = [...this.icons.assignedNodes()] as HTMLElement[]
+    const icons = [...this.iconSlot.assignedNodes()] as HTMLElement[]
 
     // Avoid zero divide by setting 1
     const iconCounts = icons.length || 1

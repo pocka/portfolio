@@ -20,24 +20,32 @@ class MyLink extends HTMLElement {
 
     anchor.classList.add('link')
     anchor.innerHTML = '<slot/>'
-    anchor.href = this.getAttribute('href')
+    anchor.href = this.getAttribute('href') || ''
 
     shadow.appendChild(style)
     shadow.appendChild(anchor)
+  }
 
-    shadow.addEventListener('click', ev => {
-      ev.preventDefault()
-      ev.stopPropagation()
+  connectedCallback() {
+    this.shadowRoot!.addEventListener('click', this.onClick)
+  }
 
-      this.navigate()
-    })
+  disconnectedCallback() {
+    this.shadowRoot!.removeEventListener('click', this.onClick)
+  }
+
+  onClick = (ev: Event) => {
+    ev.preventDefault()
+    ev.stopPropagation()
+
+    this.navigate()
   }
 
   /**
    * Navigate to href virtually by using History API.
    */
   navigate() {
-    const href = this.getAttribute('href')
+    const href = this.getAttribute('href') || ''
 
     if (href === location.pathname) {
       return
