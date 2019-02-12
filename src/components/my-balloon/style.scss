@@ -42,6 +42,10 @@ $tail-height: 32px;
 
   animation: bound-scale-in 0.6s ease-in-out both;
 
+  @media (max-width: 1000px) {
+    padding: 8px 8px;
+  }
+
   &::before,
   &::after {
     content: '';
@@ -61,6 +65,11 @@ $tail-height: 32px;
     right: $tail-width;
 
     border-bottom-right-radius: 0;
+
+    @media (max-width: 1000px) {
+      right: auto;
+      width: calc(50% - #{$tail-width / 10});
+    }
   }
 
   &::after {
@@ -68,24 +77,30 @@ $tail-height: 32px;
     width: $tail-width / 2;
 
     border-bottom-left-radius: 0;
+
+    @media (max-width: 1000px) {
+      width: calc(50% - #{$tail-width / 10});
+    }
   }
 }
 
 :host([pop-direction='right']) {
-  &::before {
-    left: $tail-width;
-    right: 0;
+  @media (min-width: 1001px) {
+    &::before {
+      left: $tail-width;
+      right: 0;
 
-    border-bottom-right-radius: inherit;
-    border-bottom-left-radius: 0;
-  }
+      border-bottom-right-radius: inherit;
+      border-bottom-left-radius: 0;
+    }
 
-  &::after {
-    left: 0;
-    right: auto;
+    &::after {
+      left: 0;
+      right: auto;
 
-    border-bottom-left-radius: inherit;
-    border-bottom-right-radius: 0;
+      border-bottom-left-radius: inherit;
+      border-bottom-right-radius: 0;
+    }
   }
 }
 
@@ -93,40 +108,58 @@ $tail-height: 32px;
 .tail-right {
   position: absolute;
   top: calc(100% - 1px);
-  height: $tail-height;
+  height: $tail-height / 2;
 
   transform-origin: top left;
+
+  @media (min-width: 1001px) {
+    height: $tail-height;
+  }
 }
 
 .tail-left {
-  right: $tail-width;
+  right: calc(50% + #{$tail-width / 10});
 
   border-right: inherit;
 
-  transform: skewX(63.5deg);
+  transform: skewX(22deg);
+
+  @media (min-width: 1001px) {
+    right: $tail-width;
+
+    transform: skewX(63.5deg);
+  }
 }
 
 .tail-right {
-  right: $tail-width / 2;
+  right: calc(50% - #{$tail-width / 10});
 
   border-left: inherit;
 
-  transform: skewX(45deg);
+  transform: skewX(-22deg);
+
+  @media (min-width: 1001px) {
+    right: $tail-width / 2;
+
+    transform: skewX(45deg);
+  }
 }
 
 :host([pop-direction='right']) {
-  & > .tail-left {
-    right: auto;
-    left: $tail-width;
+  @media (min-width: 1001px) {
+    & > .tail-left {
+      right: auto;
+      left: $tail-width;
 
-    transform: skewX(-63.5deg);
-  }
+      transform: skewX(-63.5deg);
+    }
 
-  & > .tail-right {
-    right: auto;
-    left: $tail-width / 2;
+    & > .tail-right {
+      right: auto;
+      left: $tail-width / 2;
 
-    transform: skewX(-45deg);
+      transform: skewX(-45deg);
+    }
   }
 }
 

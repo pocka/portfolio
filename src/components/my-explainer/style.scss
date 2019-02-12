@@ -43,12 +43,24 @@ $selector-size: 216px;
 
 .selector {
   width: $selector-size;
-  margin-top: 144px;
+  margin-top: -$selector-size / 2;
+
+  @media (min-height: 1000px) {
+    margin-top: 144px;
+  }
 }
 
 .control {
   display: flex;
   margin-top: 48px;
+}
+
+.next,
+.prev {
+  padding: 16px;
+  height: 1em;
+
+  cursor: pointer;
 }
 
 %arrow {
@@ -58,10 +70,9 @@ $selector-size: 216px;
   height: 1em;
 
   border-radius: 4px;
-  cursor: pointer;
 }
 
-.prev {
+.arrow-prev {
   @extend %arrow;
 
   margin-left: -0.5em;
@@ -73,7 +84,7 @@ $selector-size: 216px;
   }
 }
 
-.next {
+.arrow-next {
   @extend %arrow;
 
   margin-right: -0.5em;
@@ -87,6 +98,9 @@ $selector-size: 216px;
 
 .labels-wrapper {
   flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   overflow: hidden;
 }

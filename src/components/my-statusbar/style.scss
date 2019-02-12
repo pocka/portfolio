@@ -32,6 +32,11 @@ $item-padding: 0 12px;
 
   text-align: center;
   text-decoration: none;
+
+  @media (max-width: 768px) {
+    font-size: 0.8em;
+    overflow: hidden;
+  }
 }
 
 .icons {
