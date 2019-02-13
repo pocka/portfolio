@@ -1,5 +1,6 @@
 const path = require('path')
 
+const { EnvironmentPlugin } = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
 const StyleExtHtmlPlugin = require('style-ext-html-webpack-plugin')
 const ScriptExtHtmlPlugin = require('script-ext-html-webpack-plugin')
@@ -115,6 +116,7 @@ module.exports = {
     extensions: ['.js', '.mjs', '.ts']
   },
   plugins: [
+    new EnvironmentPlugin(['GOOGLE_ANALYTICS_TRACKING_ID']),
     new ImageminPlugin({
       optipng: {
         optimizationLevel: 5
