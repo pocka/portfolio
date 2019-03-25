@@ -1,4 +1,6 @@
 requestAnimationFrame(() => {
+  // ---
+  // Load web fonts
   const link = document.createElement('link')
 
   link.rel = 'stylesheet'
@@ -9,6 +11,7 @@ requestAnimationFrame(() => {
   head.appendChild(link)
 
   if (process.env.GOOGLE_ANALYTICS_TRACKING_ID) {
+    // ---
     // Load gtag script
     const script = document.createElement('script')
 
