@@ -58,7 +58,7 @@ class MyExplainer extends HTMLElement {
 
   connectedCallback() {
     this.slotsCount = Math.min(
-      ...[...this.shadowRoot!.querySelectorAll('slot')].map(
+      ...Array.from(this.shadowRoot!.querySelectorAll('slot')).map(
         slot => slot.assignedNodes().length
       )
     )

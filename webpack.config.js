@@ -116,7 +116,7 @@ module.exports = {
     extensions: ['.js', '.mjs', '.ts']
   },
   plugins: [
-    new EnvironmentPlugin(['GOOGLE_ANALYTICS_TRACKING_ID']),
+    new EnvironmentPlugin({ GOOGLE_ANALYTICS_TRACKING_ID: null }),
     new ImageminPlugin({
       optipng: {
         optimizationLevel: 5
