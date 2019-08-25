@@ -1,5 +1,6 @@
 const path = require('path')
 
+const marked = require('marked')
 const { EnvironmentPlugin } = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
 const StyleExtHtmlPlugin = require('style-ext-html-webpack-plugin')
@@ -13,7 +14,40 @@ const ForkTsCheckerPlugin = require('fork-ts-checker-webpack-plugin')
 
 const pkg = require('./package.json')
 
-const paths = ['/', '/about/', '/skill/', '/works/', '/contact/']
+const paths = ['/', '/front-end/', '/back-end/', '/dx/', '/about/', '/contact/']
+
+const mdRenderer = new marked.Renderer()
+
+mdRenderer.link = (href, title = '', text = '') => {
+  if (href.match(/^(https?)?:\/\/|(mailto:)/)) {
+    return `<a target="_blank" href="${href}">${text}</a>`
+  }
+
+  return `<a href="${href}" data-pushstate="true">${text}</a>`
+}
+
+mdRenderer.image = (href, title, text) => {
+  if (href.match(/^(https?):\/\//)) {
+    return `<img src="${href}" title="${text || ''}" />`
+  }
+
+  return `
+    <picture title="${text || ''}">
+      <source srcset="\${require('${href}?webp')}" type="image/webp" >
+      <source srcset="${href}" type="image/png" >
+      <img src="${href}" loading="lazy" />
+    </picture>
+  `
+}
+
+const htmlMinifierOptions = {
+  collapseWhitespace: true,
+  removeComments: true,
+  removeRedundantAttributes: true,
+  removeScriptTypeAttributes: true,
+  removeStyleLinkTypeAttributes: true,
+  useShortDoctype: true
+}
 
 module.exports = {
   entry: {
@@ -40,6 +74,27 @@ module.exports = {
         ]
       },
       {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              minimize: true,
+              interpolate: true,
+              attrs: ['img:src', ':srcset'],
+              exportAsEs6Default: true,
+              ...htmlMinifierOptions
+            }
+          },
+          {
+            loader: 'markdown-loader',
+            options: {
+              renderer: mdRenderer
+            }
+          }
+        ]
+      },
+      {
         test: /\.scss$/,
         use: [
           'raw-loader',
@@ -63,8 +118,29 @@ module.exports = {
         ]
       },
       {
-        test: /\.png$/,
-        loader: 'file-loader'
+        test: /\.(jpe?g|png)$/,
+        oneOf: [
+          {
+            resourceQuery: /webp/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  name: '[contenthash].webp'
+                }
+              },
+              {
+                loader: 'webp-loader',
+                options: {
+                  quality: 75
+                }
+              }
+            ]
+          },
+          {
+            loader: 'file-loader'
+          }
+        ]
       },
       {
         test: /\.svg$/,
@@ -135,14 +211,7 @@ module.exports = {
                 })}!./src/index.html`
               : './src/index.html',
           filename: path.resolve(__dirname, `./dist${p}/index.html`),
-          minify: {
-            collapseWhitespace: true,
-            removeComments: true,
-            removeRedundantAttributes: true,
-            removeScriptTypeAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            useShortDoctype: true
-          },
+          minify: htmlMinifierOptions,
           inject: 'head'
         })
     ),

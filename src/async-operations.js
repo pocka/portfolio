@@ -4,7 +4,7 @@ requestAnimationFrame(() => {
   const link = document.createElement('link')
 
   link.rel = 'stylesheet'
-  link.href = 'https://fonts.googleapis.com/css?family=Passero+One|Roboto'
+  link.href = 'https://rsms.me/inter/inter.css'
 
   const head = document.querySelector('head')
 
@@ -16,9 +16,7 @@ requestAnimationFrame(() => {
     const script = document.createElement('script')
 
     script.async = true
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${
-      process.env.GOOGLE_ANALYTICS_TRACKING_ID
-    }`
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_TRACKING_ID}`
 
     head.appendChild(script)
 

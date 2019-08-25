@@ -12,3 +12,8 @@ declare module '*.scss' {
   const css: string
   export default css
 }
+
+declare module '*.md' {
+  const html: string
+  export default html
+}

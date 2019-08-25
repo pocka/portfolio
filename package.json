@@ -60,8 +60,10 @@
     "cssnano": "^4.1.10",
     "file-loader": "^4.2.0",
     "fork-ts-checker-webpack-plugin": "^1.5.0",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "imagemin-webpack-plugin": "^2.4.2",
+    "markdown-loader": "^5.1.0",
     "mini-css-extract-plugin": "^0.8.0",
     "postcss": "^7.0.17",
     "postcss-loader": "^3.0.0",
@@ -78,6 +80,7 @@
     "svgo-loader": "^2.2.1",
     "typescript": "^3.5.3",
     "uglify-template-string-loader": "^1.1.1",
+    "webp-loader": "^0.5.0",
     "webpack": "^4.39.2",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0"
