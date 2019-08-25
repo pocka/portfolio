@@ -2,18 +2,29 @@ import css from './style.scss'
 
 import { getPosition } from './math'
 
-class MyExplainer extends HTMLElement {
+class MeCircle extends HTMLElement {
   private slotsCount = 0
-  private current = 0
   private navigatable = true
 
   private labels: HTMLElement
+  private labelSlot: HTMLSlotElement
   private iconContainer: HTMLElement
-  private balloons: HTMLSlotElement
   private iconSlot: HTMLSlotElement
 
   private prev: HTMLElement
   private next: HTMLElement
+
+  private get current() {
+    const labels = this.labelSlot.assignedNodes() as HTMLElement[]
+
+    const value = this.getAttribute('value')
+
+    return Math.max(labels.findIndex(label => label.dataset.value === value), 0)
+  }
+
+  static get observedAttributes() {
+    return ['value']
+  }
 
   constructor() {
     super()
@@ -42,14 +53,14 @@ class MyExplainer extends HTMLElement {
           </a>
         </div>
       </div>
-
-      <slot/>
     `
 
     this.labels = shadow.querySelector('.labels') as HTMLElement
-    this.balloons = shadow.querySelector('slot:not([name])') as HTMLSlotElement
     this.iconContainer = shadow.querySelector('.icons') as HTMLElement
 
+    this.labelSlot = shadow.querySelector(
+      'slot[name="label"]'
+    ) as HTMLSlotElement
     this.iconSlot = shadow.querySelector('slot[name="icon"]') as HTMLSlotElement
 
     this.prev = shadow.querySelector('.prev') as HTMLElement
@@ -57,8 +68,22 @@ class MyExplainer extends HTMLElement {
   }
 
   connectedCallback() {
+    this.setup()
+  }
+
+  disconnectedCallback() {
+    this.cleanup()
+  }
+
+  attributeChangedCallback() {
+    this.updateStyle()
+  }
+
+  private setup = () => {
+    this.cleanup()
+
     this.slotsCount = Math.min(
-      ...[...this.shadowRoot!.querySelectorAll('slot')].map(
+      ...Array.from(this.shadowRoot!.querySelectorAll('slot')).map(
         slot => slot.assignedNodes().length
       )
     )
@@ -70,13 +95,15 @@ class MyExplainer extends HTMLElement {
       icons[i].addEventListener('click', this.onClickIcon)
     }
 
+    this.iconSlot.addEventListener('slotchange', this.setup)
+
     this.prev.addEventListener('click', this.decrement)
     this.next.addEventListener('click', this.increment)
 
     this.updateStyle()
   }
 
-  disconnectedCallback() {
+  private cleanup = () => {
     const icons = this.iconSlot.assignedNodes() as HTMLElement[]
 
     for (let i = 0, l = icons.length; i < l; i++) {
@@ -84,8 +111,26 @@ class MyExplainer extends HTMLElement {
       icons[i].removeEventListener('click', this.onClickIcon)
     }
 
+    this.iconSlot.removeEventListener('slotchange', this.setup)
+
     this.prev.removeEventListener('click', this.decrement)
     this.next.removeEventListener('click', this.increment)
+  }
+
+  private emitChange = (index: number) => {
+    const selected = (this.labelSlot.assignedNodes() as HTMLElement[])[index]
+
+    if (!selected) {
+      return
+    }
+
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {
+          value: selected.dataset.value
+        }
+      })
+    )
   }
 
   /**
@@ -96,8 +141,8 @@ class MyExplainer extends HTMLElement {
       return
     }
 
-    this.current = this.current >= this.slotsCount - 1 ? 0 : this.current + 1
     this.updateStyle()
+    this.emitChange(this.current >= this.slotsCount - 1 ? 0 : this.current + 1)
   }
 
   /**
@@ -108,19 +153,22 @@ class MyExplainer extends HTMLElement {
       return
     }
 
-    this.current = this.current <= 0 ? this.slotsCount - 1 : this.current - 1
     this.updateStyle()
+    this.emitChange(this.current <= 0 ? this.slotsCount - 1 : this.current - 1)
   }
 
   private onClickIcon = (ev: Event) => {
+    ev.preventDefault()
+    ev.stopPropagation()
+
     const index = parseInt((ev.currentTarget as HTMLElement).dataset.index!, 10)
 
     if (this.current === index || !this.navigatable) {
       return
     }
 
-    this.current = index
     this.updateStyle()
+    this.emitChange(index)
   }
 
   updateStyle() {
@@ -165,39 +213,9 @@ class MyExplainer extends HTMLElement {
     // Set label viewport
 
     this.labels.style.transform = `translateX(${this.current * -100}%)`
-
-    // ------------------------------
-    // Set whether balloon is visible
-
-    const balloons = [...this.balloons.assignedNodes()] as HTMLElement[]
-
-    const nextBalloon = balloons.filter((_, i) => i === this.current)[0]
-    const prevBalloon = balloons.filter(el =>
-      el.classList.contains('active-balloons')
-    )[0]
-
-    if (prevBalloon) {
-      const hideBalloon = () => {
-        prevBalloon.classList.remove('active-balloons')
-        prevBalloon.style.opacity = null
-
-        nextBalloon.classList.add('active-balloons')
-
-        prevBalloon.removeEventListener('transitionend', hideBalloon)
-
-        this.navigatable = true
-      }
-
-      prevBalloon.style.opacity = '0'
-
-      this.navigatable = false
-      prevBalloon.addEventListener('transitionend', hideBalloon)
-    } else {
-      nextBalloon.classList.add('active-balloons')
-    }
   }
 }
 
-if (!customElements.get('my-explainer')) {
-  customElements.define('my-explainer', MyExplainer)
+if (!customElements.get('me-circle')) {
+  customElements.define('me-circle', MeCircle)
 }

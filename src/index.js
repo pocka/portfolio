@@ -1,21 +1,28 @@
 // Load critical CSS to inline.
 import './index.scss'
 
-const app = document.getElementById('app')
+import { pages } from './pages'
+
+const app = document.getElementById('contents')
+const nav = document.getElementById('nav')
 
 /**
- * Creates <meta name="description"> and returns it.
- *
- * @returns {HTMLElement} <meta name="description">
+ * Writes description to head.
  */
-const createDescription = () => {
-  const meta = document.createElement('meta')
+const renderDescription = description => {
+  const desc = document.querySelector('meta[name="description"]')
 
-  meta.setAttribute('name', 'description')
+  if (!desc) {
+    const meta = document.createElement('meta')
 
-  document.querySelector('head').appendChild(meta)
+    meta.setAttribute('name', 'description')
+    meta.setAttribute('content', description)
 
-  return meta
+    document.querySelector('head').appendChild(meta)
+    return
+  }
+
+  desc.setAttribute('content', description)
 }
 
 /**
@@ -38,45 +45,72 @@ const fadeContainer = () =>
     app.addEventListener('transitionend', resolvePromise)
   })
 
+let handlerCleanup
+
 /**
  * Render components depends on route.
  *
  * @param {boolean} ssr Whether DOM is prerendered.
  */
 const render = (ssr = false) => {
-  const path = location.pathname.replace(/(.+)\/$/, '$1')
+  const path = location.pathname
+
+  nav.setAttribute('value', path)
 
   const defaultDescription = "pocka's portfolio"
 
   const load = (() => {
-    switch (path) {
-      case '/':
-        return import('~/pages/top')
-      case '/about':
-        return import('~/pages/about')
-      case '/skill':
-        return import('~/pages/skill')
-      case '/works':
-        return import('~/pages/works')
-      case '/contact':
-        return import('~/pages/contact')
-      default:
-        return import('~/pages/404')
+    const found = pages.find(page => page.path === path)
+
+    if (!found) {
+      return Promise.resolve({ html: '', description: '' })
     }
+
+    return found
+      .render()
+      .then(mod => ({ html: mod.default, description: found.description }))
   })()
 
   if (!ssr) {
     const apply = () =>
-      load.then(({ render, description = defaultDescription }) => {
-        app.innerHTML = ''
+      load.then(({ html, description }) => {
+        if (handlerCleanup) {
+          handlerCleanup()
+        }
 
-        render(app)
+        app.innerHTML = `<div>${html}</div>`
+        renderDescription(description || defaultDescription)
 
-        const descriptionTag =
-          document.querySelector('meta[name="description"]') ||
-          createDescription()
+        const links = Array.from(
+          app.querySelectorAll(
+            '[data-pushstate="true"][href]:not([target="_blank"])'
+          )
+        )
 
-        descriptionTag.setAttribute('content', description)
+        const pushstate = ev => {
+          ev.preventDefault()
+
+          history.pushState({}, ev.currentTarget.href, ev.currentTarget.href)
+          render()
+        }
+
+        links.forEach(el => {
+          const href = el.getAttribute('href')
+
+          if (!href || /^https?:\/\//.test(href)) {
+            return
+          }
+
+          el.addEventListener('click', pushstate)
+        })
+
+        handlerCleanup = () => {
+          links.forEach(el => {
+            el.removeEventListener('click', pushstate)
+          })
+
+          handlerCleanup = void 0
+        }
       })
 
     if (window.PRERENDER) {
@@ -92,10 +126,34 @@ const render = (ssr = false) => {
   }
 }
 
+const setupNav = () => {
+  nav.addEventListener('change', ev => {
+    history.pushState({}, ev.detail.value, ev.detail.value)
+    render()
+  })
+
+  nav.innerHTML = pages
+    .map(
+      page => `
+      <a title="${page.title}" href="${page.path}" slot="icon">${page.icon}</a>
+      <span
+        slot="label"
+        data-value="${page.path}"
+      >
+        ${page.title}
+      </span>
+  `
+    )
+    .join('')
+}
+
+// ---
+
 window.onpopstate = function(ev) {
   render()
 }
 
+setupNav()
 render(!!document.body.dataset.prerendered)
 
 // Executed only when prerender
