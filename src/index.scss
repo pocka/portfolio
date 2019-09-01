@@ -125,6 +125,8 @@ ul {
   align-items: center;
   justify-content: center;
   width: 100vw;
+  height: 200px;
+  flex-shrink: 0;
 
   background-color: $color-primary;
   color: $color-bg;
@@ -161,6 +163,7 @@ ul {
     padding: 80px;
 
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
