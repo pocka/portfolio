@@ -13,3 +13,61 @@
     --color-text-secondary: #aaa;
   }
 }
+
+/* Overrides mvp.css */
+nav {
+  margin-bottom: 5rem;
+}
+
+/* Vertical rhythm */
+:root {
+  --baseline: 1.75;
+  --line-height: var(--baseline);
+  line-height: var(--baseline);
+}
+
+body {
+  line-height: calc(var(--baseline) * 1rem);
+}
+
+p {
+  margin-bottom: 0;
+  margin-top: calc(var(--baseline) * 1rem);
+}
+
+sup {
+  /* Prevent <sup> to change the parent line-height */
+  vertical-align: baseline;
+  top: -6px;
+  line-height: normal;
+}
+
+ul {
+  margin-bottom: 0;
+  margin-top: calc(var(--baseline) * 1rem);
+}
+
+ul li {
+  padding: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  margin-top: calc(var(--baseline) * 2rem);
+  line-height: calc(var(--baseline) * 2rem);
+}
+
+h2 {
+  margin-bottom: 0;
+  margin-top: calc(var(--baseline) * 2rem);
+  line-height: calc(var(--baseline) * 1rem);
+}
+
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0;
+  margin-top: calc(var(--baseline) * 1rem);
+  line-height: calc(var(--baseline) * 1rem);
+}
