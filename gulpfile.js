@@ -20,6 +20,15 @@ async function html() {
 
 exports.html = html
 
+async function favicon() {
+  return gulp
+    .src('src/favicon.png')
+    .pipe(gulp.dest('dist'))
+    .pipe(connect.reload())
+}
+
+exports.favicon = favicon
+
 async function devServer() {
   return connect.server({
     root: 'dist',
@@ -33,6 +42,7 @@ exports.devServer = devServer
 
 async function watch() {
   gulp.watch('src/**/*.{md,css,js}', { ignoreInitial: false }, html)
+  gulp.watch('src/favicon.png', { ignoreInitial: false }, favicon)
 }
 
 exports.watch = watch
@@ -45,6 +55,6 @@ exports.dev = gulp.parallel(watch, devServer)
 /**
  * Build static files.
  */
-exports.build = html
+exports.build = gulp.parallel(html, favicon)
 
 exports.default = exports.dev

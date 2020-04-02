@@ -17,6 +17,7 @@ async function Html() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>${pkg.name}</title>
         <meta name="description" content="${pkg.description}" />
+        <link rel="shortcut icon" href="/favicon.png" />
         ${await SiteStyle()}
       </head>
       <body>
