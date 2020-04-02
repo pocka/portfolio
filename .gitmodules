@@ -1,0 +1,3 @@
+[submodule "mvp"]
+	path = lib/mvp
+	url = https://github.com/andybrewer/mvp
