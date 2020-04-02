@@ -1,16 +1,21 @@
 @import '../lib/mvp/mvp.css';
 
+:root {
+  --color-secondary: #9e057d;
+  --color-text-secondary: #545454;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color: #0097fc;
     --color-accent: #0097fc4f;
     --color-bg: #333;
     --color-bg-secondary: #555;
-    --color-secondary: #e20de9;
+    --color-secondary: #fbb4fd;
     --color-secondary-accent: #e20de94f;
     --color-shadow: #bbbbbb20;
     --color-text: #f7f7f7;
-    --color-text-secondary: #aaa;
+    --color-text-secondary: #ccc;
   }
 }
 
@@ -45,6 +50,10 @@ sup {
 ul {
   margin-bottom: 0;
   margin-top: calc(var(--baseline) * 1rem);
+}
+
+nav ul {
+  margin-top: 0;
 }
 
 ul li {
