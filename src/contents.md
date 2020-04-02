@@ -51,6 +51,7 @@ A Storybook addon that embeds images, PDFs, and Figma files to provide better a 
 ## storybookjs/storybook
 
 An isolated UI component development environment.
+Submitted a few PRs, helped solving issues, corporated in Docs mode for Vue.
 
 - [Official site][storybook-official]
 - [GitHub repository][storybook-repo]
