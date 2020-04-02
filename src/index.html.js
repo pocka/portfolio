@@ -25,7 +25,13 @@ async function Html() {
             <span>pocka.me</span>
             <ul>
               <li>
-                <a href="#">Profile</a>
+                <a href="#profile">Profile</a>
+              </li>
+              <li>
+                <a href="#skills">Skills</a>
+              </li>
+              <li>
+                <a href="#works">Works</a>
               </li>
               <li>
                 <a href="https://github.com/pocka/portfolio">GitHub</a>
@@ -36,6 +42,10 @@ async function Html() {
         <main>
           ${await Markdown()}
         </main>
+        <footer>
+          <hr />
+          <p>&copy; 2020 Shota Fuji</p>
+        </footer>
       </body>
     </html>
   `
