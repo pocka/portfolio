@@ -60,6 +60,15 @@ sup {
   /* Prevent <sup> to change the parent line-height */
   vertical-align: baseline;
   top: -6px;
+}
+
+a,
+sup,
+code,
+span,
+small,
+kbd {
+  /* Do not apply line-height for inline elements */
   line-height: normal;
 }
 
