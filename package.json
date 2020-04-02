@@ -38,6 +38,10 @@
   "postcss": {
     "plugins": {
       "postcss-import": {},
+      "postcss-url": {
+        "url": "copy",
+        "useHash": true
+      },
       "postcss-preset-env": {},
       "cssnano": {}
     }
@@ -78,6 +82,7 @@
     "postcss-import": "^12.0.1",
     "postcss-load-config": "^2.1.0",
     "postcss-preset-env": "^6.7.0",
+    "postcss-url": "^8.0.0",
     "posthtml-external-link-target-blank": "^1.0.0",
     "posthtml-link-noreferrer": "^1.0.6",
     "prettier": "^1.18.2",

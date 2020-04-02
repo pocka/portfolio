@@ -1,6 +1,9 @@
 @import '../lib/mvp/mvp.css';
+@import '../lib/inter/inter.css';
 
 :root {
+  font-size: 16px;
+
   --color-secondary: #9e057d;
   --color-text-secondary: #545454;
 }
@@ -22,6 +25,10 @@
 /* Overrides mvp.css */
 nav {
   margin-bottom: 5rem;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
 }
 
 /* Vertical rhythm */

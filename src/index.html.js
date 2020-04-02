@@ -59,7 +59,11 @@ async function SiteStyle() {
   const source = await fs.readFile(sourcePath, 'utf-8')
 
   const { css } = await postcssrc().then(({ plugins, options }) =>
-    postcss(plugins).process(source, { ...options, from: sourcePath })
+    postcss(plugins).process(source, {
+      ...options,
+      from: sourcePath,
+      to: path.resolve(__dirname, '../dist/style.css')
+    })
   )
 
   return html`
