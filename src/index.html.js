@@ -34,7 +34,7 @@ async function Html() {
                 <a href="#skills">Skills</a>
               </li>
               <li>
-                <a href="#works">Works</a>
+                <a href="#works--contributions">Works</a>
               </li>
               <li>
                 <a href="${pkg.repository.url}">GitHub</a>
