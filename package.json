@@ -2,8 +2,14 @@
   "name": "pocka.me",
   "version": "1.0.0",
   "description": "A profile and portfolio of Shota Fuji (pocka)",
-  "repository": "git@github.com:pocka/portfolio.git",
-  "author": "pocka <pockawoooh@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pocka/portfolio"
+  },
+  "author": {
+    "name": "Shota FUJI",
+    "email": "pockawoooh@gmail.com"
+  },
   "private": true,
   "packageManager": "pnpm@6.24.4",
   "browserslist": [
@@ -60,7 +66,8 @@
       "htmlnano": {
         "removeUnusedCss": {
           "tool": "purgeCSS"
-        }
+        },
+        "minifyJs": false
       }
     }
   },
@@ -98,5 +105,8 @@
       "port": 8080,
       "host": "localhost"
     }
+  },
+  "dependencies": {
+    "@picocss/pico": "^1.4.4"
   }
 }

@@ -23,7 +23,9 @@ async function Html() {
       <body>
         <header>
           <nav>
-            <span>pocka.me</span>
+            <ul>
+              <li><strong>${pkg.name}</strong></li>
+            </ul>
             <ul>
               <li>
                 <a href="#profile">Profile</a>
@@ -35,15 +37,14 @@ async function Html() {
                 <a href="#works">Works</a>
               </li>
               <li>
-                <a href="https://github.com/pocka/portfolio">GitHub</a>
+                <a href="${pkg.repository.url}">GitHub</a>
               </li>
             </ul>
           </nav>
         </header>
         <main>${await Markdown()}</main>
         <footer>
-          <hr />
-          <p>&copy; 2020 Shota Fuji</p>
+          <small>&copy; 2020 ${pkg.author.name}</small>
         </footer>
       </body>
     </html>
