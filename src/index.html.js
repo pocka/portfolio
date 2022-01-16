@@ -2,7 +2,7 @@ const fs = require('fs').promises
 const path = require('path')
 
 const { html, unsafePrefixString } = require('@popeindustries/lit-html-server')
-const marked = require('marked')
+const marked = require('marked').marked
 const postcss = require('postcss')
 const postcssrc = require('postcss-load-config')
 
@@ -40,9 +40,7 @@ async function Html() {
             </ul>
           </nav>
         </header>
-        <main>
-          ${await Markdown()}
-        </main>
+        <main>${await Markdown()}</main>
         <footer>
           <hr />
           <p>&copy; 2020 Shota Fuji</p>
@@ -62,7 +60,7 @@ async function SiteStyle() {
     postcss(plugins).process(source, {
       ...options,
       from: sourcePath,
-      to: path.resolve(__dirname, '../dist/style.css')
+      to: path.resolve(__dirname, '../dist/style.css'),
     })
   )
 
@@ -77,7 +75,5 @@ async function Markdown() {
   const mdPath = path.resolve(__dirname, './contents.md')
   const renderedHtml = marked(await fs.readFile(mdPath, 'utf-8'))
 
-  return html`
-    ${unsafePrefixString + renderedHtml}
-  `
+  return html` ${unsafePrefixString + renderedHtml} `
 }
