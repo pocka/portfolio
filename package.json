@@ -5,6 +5,7 @@
   "repository": "git@github.com:pocka/portfolio.git",
   "author": "pocka <pockawoooh@gmail.com>",
   "private": true,
+  "packageManager": "pnpm@6.24.4",
   "browserslist": [
     "last 2 Chrome versions",
     "last 2 Firefox versions",
